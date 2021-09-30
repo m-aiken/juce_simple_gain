@@ -17,6 +17,7 @@ SimpleGainAudioProcessorEditor::SimpleGainAudioProcessorEditor (SimpleGainAudioP
     mGainSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 20);
     mGainSlider.setRange(-60.f, 0.f, 0.01f);
     mGainSlider.setValue(-6.f);
+    mGainSlider.addListener(this);
     addAndMakeVisible(mGainSlider);
 
     // Make sure that before the constructor has finished, you've set the
@@ -41,4 +42,12 @@ void SimpleGainAudioProcessorEditor::resized()
     // subcomponents in your editor..
 
     mGainSlider.setBounds(getWidth() / 2 - 50, getHeight() / 2 - 75, 100, 150);
+}
+
+void SimpleGainAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
+{
+    if (slider == &mGainSlider)
+    {
+        audioProcessor.mGain = mGainSlider.getValue();
+    }
 }
